@@ -1,7 +1,6 @@
 <script>
   import {data1, data2} from "./mock-csv";
   import Table from "./components/Table.svelte";
-  import {SvelteComponent} from "svelte";
 
   let diffs = [];
   let csv1 = data1
@@ -25,7 +24,7 @@
           errors.push(personKey)
         }
       })
-      //z
+      //
       // let noErrors = Object.keys(person).reduce((a, b, i) => {
       //   let isEqual = person[i] === personInColumn2[i];
       //   return isEqual ? a : [...a,]
@@ -62,27 +61,49 @@
   }
 
   $:diffs = findErrors(csv1Arr, csv2Arr, primaryKey)
+
+  //TODO
+  $: if (window.innerWidth < 1100) {
+    alert("this website isn't designed for for websites... yet!")
+  }
+
 </script>
-<h1>CSV Differences Bitches</h1>
+<h1>CSV Differences</h1>
 <label>
   Primary Key
   <input type="text" bind:value={primaryKey}/>
 </label>
-<h2>
-  CSV 1
-</h2>
-<textarea bind:value={csv1}></textarea>
-<h2>
-  CSV 2
-</h2>
-<textarea bind:value={csv2}></textarea>
+<div class="csv-inputs">
+  <div class="textarea-group">
+    <h2>
+      CSV 1
+    </h2>
+    <textarea bind:value={csv1}></textarea>
+  </div>
+  <div class="textarea-group">
+    <h2>
+      CSV 2
+    </h2>
+    <textarea bind:value={csv2}></textarea>
+  </div>
+
+</div>
+
 <br/>
 <Table diffs={diffs}/>
 <style>
+    .csv-inputs {
+        display: flex;
+    }
+
+    .textarea-group {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
 
     textarea {
         height: 10em;
-        width: 50%;
     }
 
 </style>

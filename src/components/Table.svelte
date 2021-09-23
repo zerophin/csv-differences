@@ -1,18 +1,24 @@
 <script>
   export let diffs = [];
 </script>
-<div class="diff-collection">
+<div class="tables">
   {#each diffs as diff, i}
-    <div class="diff-row">
+    <div class="table-group">
       {#each Object.entries(diff).filter(([key]) => key !== "errorKeys") as [csvInput, csvValues]}
-        <div class="csv-row">
-          <h2>{csvInput}</h2>
+        <table>
+          <caption>{csvInput}</caption>
           {#each Object.entries(csvValues) as [key, value]}
-            <p class:diffError={diff.errorKeys.includes(key)}>{key} - {value}</p>
+            <tr>
+              <td><strong>{key}</strong></td>
+              <td class:diffError={diff.errorKeys.includes(key)}>{value}</td>
+            </tr>
           {/each}
-        </div>
+          <!--          <tr>-->
+          <!--            <td>Errors</td>-->
+          <!--            <td>{diff.errorKeys}</td>-->
+          <!--          </tr>-->
+        </table>
       {/each}
-      <pre>Errors {diff.errorKeys}</pre>
     </div>
   {/each}
   {#if !(diffs.length > 0)}
@@ -22,25 +28,44 @@
   {/if}
 </div>
 <style>
-
-    .diff-collection {
+    .tables {
         display: flex;
+        flex-wrap: wrap;
     }
 
-    .diff-row {
+    .table-group {
         display: flex;
         flex-direction: row;
-        justify-content: center;
-        width: 20%
+        justify-content: space-between;
+        margin-right: 2rem;
+        width: 25%;
     }
 
-    .csv-row {
-        padding: 2em;
+    .table-group:first-child {
+    }
+
+    caption {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    table {
+        width: 100%;
+        border: 1px solid #000;
+        display: block;
+    }
+
+    th, td {
+        width: 20%;
+        text-align: left;
+        vertical-align: top;
+        border: 1px solid #000;
+        border-spacing: 0;
     }
 
     .diffError {
         background: red;
         color: white;
-        padding: .5rem;
     }
+
 </style>
