@@ -1,5 +1,7 @@
 <script>
   import {data1, data2} from "./mock-csv";
+  import Table from "./components/Table.svelte";
+  import {SvelteComponent} from "svelte";
 
   let diffs = [];
   let csv1 = data1
@@ -60,48 +62,22 @@
 
   $:diffs = findErrors(csv1Arr, csv2Arr, "ID")
 </script>
-<h1>
+<h1>CSV Differences Bitches</h1>
+<h2>
   CSV 1
-</h1>
+</h2>
 <textarea bind:value={csv1}></textarea>
-<h1>
+<h2>
   CSV 2
-</h1>
+</h2>
 <textarea bind:value={csv2}></textarea>
 <br/>
-{#each diffs as diff, i}
-  <div class="diff-row">
-    {#each Object.entries(diff).filter(([key]) => key !== "errorKeys") as [csvInput, csvValues]}
-      <div class="csv-row">
-        <h2>{csvInput}</h2>
-        {#each Object.entries(csvValues) as [key, value]}
-          <p class:diffError={diff.errorKeys.includes(key)}>{key} - {value}</p>
-        {/each}
-      </div>
-    {/each}
-    <pre>Errors {diff.errorKeys}</pre>
-  </div>
-{/each}
-{#if !(diffs.length > 0)}
-  <p>
-    There are no errors!
-  </p>
-{/if}
+<Table diffs={diffs}/>
 <style>
+
     textarea {
         height: 10em;
         width: 50%;
     }
 
-    .diff-row {
-        display: flex;
-    }
-
-    .csv-row {
-        padding: 2em;
-    }
-
-    .diffError {
-        color: red;
-    }
 </style>
