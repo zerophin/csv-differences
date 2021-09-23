@@ -59,10 +59,6 @@
 
   $:diffs = findErrors(csv1Arr, csv2Arr, primaryKey)
 
-  //TODO
-  $: if (window.innerWidth < 1100) {
-    alert("this website isn't designed for for websites... yet!")
-  }
 
 </script>
 <h1>CSV Differences</h1>
@@ -96,6 +92,13 @@
 
     textarea {
         height: 10em;
+    }
+
+    @media (max-width: 800px) {
+        .csv-inputs {
+            width: 100%;
+            flex-direction: column;
+        }
     }
 
 </style>

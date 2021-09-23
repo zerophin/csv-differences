@@ -31,6 +31,7 @@
     .tables {
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;
     }
 
     .table-group {
@@ -39,6 +40,7 @@
         justify-content: space-between;
         margin-right: 2rem;
         width: 25%;
+        min-width: 200px;
     }
 
     .table-group:first-child {
@@ -66,6 +68,12 @@
     .diffError {
         background: red;
         color: white;
+    }
+
+    @media (max-width: 800px) {
+        .table-group {
+            width: 100%;
+        }
     }
 
 </style>
