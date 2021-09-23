@@ -6,6 +6,7 @@
   let csv1 = data1
   let csv2 = data2
   let primaryKey = 'id'
+  $: primaryKeyOptions = csv1Arr.length ? Object.keys(csv1Arr[0]) : [];
   $: csv1Arr = csvToObject(csv1)
   $: csv2Arr = csvToObject(csv2)
 
@@ -71,8 +72,15 @@
 <h1>CSV Differences</h1>
 <label>
   Primary Key
-  <input type="text" bind:value={primaryKey}/>
+  <select bind:value={primaryKey}>
+    {#each primaryKeyOptions as key}
+      <option value={key}>
+        {key}
+      </option>
+    {/each}
+  </select>
 </label>
+<small>Primary Key should be unique in both tables</small>
 <div class="csv-inputs">
   <div class="textarea-group">
     <h2>
