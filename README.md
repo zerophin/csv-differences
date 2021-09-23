@@ -4,7 +4,7 @@ Working app can be found [here](https://csv-diff.netlify.app/)
 
 # About
 
-Compare two csv files of the representing the same information to find data entry errors.
+Compare two csv files representing the same information to find data entry errors.
 
 # svelte app
 
