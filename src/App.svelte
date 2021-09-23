@@ -8,21 +8,36 @@
   $: csv2Arr = csvToObject(csv2)
 
   function findErrors(arr1, arr2, keyTerm = 'id') {
-    let errors = [];
+    let rowDifferences = [];
     if (!Array.isArray(arr1) || !Array.isArray(arr2)) return [];
     arr1.forEach(person => {
       let personInColumn2 = arr2.find(two => person[keyTerm] === two[keyTerm])
       if (!personInColumn2) {
         return;
       }
-      let noErrors = Object.keys(person).every(personKey => {
-        return person[personKey] === personInColumn2[personKey];
+      let errors = []
+      Object.keys(person).forEach(personKey => {
+        let noError = person[personKey] === personInColumn2[personKey];
+        if (!noError) {
+          errors.push(personKey)
+        }
       })
-      if (!noErrors) {
-        errors.push([person, personInColumn2]);
+      //z
+      // let noErrors = Object.keys(person).reduce((a, b, i) => {
+      //   let isEqual = person[i] === personInColumn2[i];
+      //   return isEqual ? a : [...a,]
+      // }, [])
+      if (errors.length > 0) {
+        //rowDifferences.push([person, personInColumn2]);
+        let newErrObj = {
+          csv1: person,
+          csv2: personInColumn2,
+          errorKeys: errors,
+        }
+        rowDifferences.push(newErrObj);
       }
     })
-    return errors;
+    return rowDifferences;
   }
 
   function csvToObject(csv) {
@@ -55,24 +70,17 @@
 <textarea bind:value={csv2}></textarea>
 <br/>
 {#each diffs as diff, i}
-  Difference {i + 1}:
-  <hr/>
-  <h2>
-    first
-  </h2>
-  <p>
-    ID: {diff[0].ID} <br/>
-    name: {diff[0].name}<br/>
-    age: {diff[0].age}<br/>
-  </p>
-  <h2>
-    second
-  </h2>
-  <p>
-    ID: {diff[1].ID} <br/>
-    name: {diff[1].name}<br/>
-    age: {diff[1].age}<br/>
-  </p>
+  <div class="diff-row">
+    {#each Object.entries(diff).filter(([key]) => key !== "errorKeys") as [csvInput, csvValues]}
+      <div class="csv-row">
+        <h2>{csvInput}</h2>
+        {#each Object.entries(csvValues) as [key, value]}
+          <p class:diffError={diff.errorKeys.includes(key)}>{key} - {value}</p>
+        {/each}
+      </div>
+    {/each}
+    <pre>Errors {diff.errorKeys}</pre>
+  </div>
 {/each}
 {#if !(diffs.length > 0)}
   <p>
@@ -83,6 +91,17 @@
     textarea {
         height: 10em;
         width: 50%;
-        background: red;
+    }
+
+    .diff-row {
+        display: flex;
+    }
+
+    .csv-row {
+        padding: 2em;
+    }
+
+    .diffError {
+        color: red;
     }
 </style>
