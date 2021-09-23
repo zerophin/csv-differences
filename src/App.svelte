@@ -83,5 +83,6 @@
     textarea {
         height: 10em;
         width: 50%;
+        background: red;
     }
 </style>
