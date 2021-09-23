@@ -31,7 +31,7 @@
     .tables {
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
+        justify-content: left;
     }
 
     .table-group {
@@ -71,6 +71,10 @@
     }
 
     @media (max-width: 800px) {
+        .tables {
+            justify-content: center;
+        }
+
         .table-group {
             width: 100%;
         }
