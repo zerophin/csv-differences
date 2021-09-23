@@ -1,6 +1,7 @@
 <script>
   import {data1, data2} from "./mock-csv";
   import Table from "./components/Table.svelte";
+  import PrimaryKeySelect from "./components/PrimaryKeySelect.svelte";
 
   let diffs = [];
   let csv1 = data1
@@ -13,28 +14,22 @@
   function findErrors(arr1, arr2, keyTerm = 'id') {
     let rowDifferences = [];
     if (!Array.isArray(arr1) || !Array.isArray(arr2)) return [];
-    arr1.forEach(person => {
-      let personInColumn2 = arr2.find(two => person[keyTerm] === two[keyTerm])
-      if (!personInColumn2) {
+    arr1.forEach(row => {
+      let row2 = arr2.find(two => row[keyTerm] === two[keyTerm])
+      if (!row2) {
         return;
       }
       let errors = []
-      Object.keys(person).forEach(personKey => {
-        let noError = person[personKey] === personInColumn2[personKey];
+      Object.keys(row).forEach(key => {
+        let noError = row[key] === row2[key];
         if (!noError) {
-          errors.push(personKey)
+          errors.push(key)
         }
       })
-      //
-      // let noErrors = Object.keys(person).reduce((a, b, i) => {
-      //   let isEqual = person[i] === personInColumn2[i];
-      //   return isEqual ? a : [...a,]
-      // }, [])
       if (errors.length > 0) {
-        //rowDifferences.push([person, personInColumn2]);
         let newErrObj = {
-          csv1: person,
-          csv2: personInColumn2,
+          csv1: row,
+          csv2: row2,
           errorKeys: errors,
         }
         rowDifferences.push(newErrObj);
@@ -43,6 +38,7 @@
     return rowDifferences;
   }
 
+  // returns [{column: row, column: row}]
   function csvToObject(csv) {
     if (csv.length < 1) return;
     let csvArr = csv.trim().split('\n');
@@ -70,17 +66,7 @@
 
 </script>
 <h1>CSV Differences</h1>
-<label>
-  Primary Key
-  <select bind:value={primaryKey}>
-    {#each primaryKeyOptions as key}
-      <option value={key}>
-        {key}
-      </option>
-    {/each}
-  </select>
-</label>
-<small>Primary Key should be unique in both tables</small>
+<PrimaryKeySelect bind:primaryKey bind:primaryKeyOptions/>
 <div class="csv-inputs">
   <div class="textarea-group">
     <h2>
@@ -94,9 +80,7 @@
     </h2>
     <textarea bind:value={csv2}></textarea>
   </div>
-
 </div>
-
 <br/>
 <Table diffs={diffs}/>
 <style>
