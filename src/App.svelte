@@ -6,6 +6,7 @@
   let diffs = [];
   let csv1 = data1
   let csv2 = data2
+  let primaryKey = 'id'
   $: csv1Arr = csvToObject(csv1)
   $: csv2Arr = csvToObject(csv2)
 
@@ -60,9 +61,13 @@
     return arr
   }
 
-  $:diffs = findErrors(csv1Arr, csv2Arr, "ID")
+  $:diffs = findErrors(csv1Arr, csv2Arr, primaryKey)
 </script>
 <h1>CSV Differences Bitches</h1>
+<label>
+  Primary Key
+  <input type="text" bind:value={primaryKey}/>
+</label>
 <h2>
   CSV 1
 </h2>
