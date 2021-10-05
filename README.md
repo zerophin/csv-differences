@@ -6,6 +6,10 @@ Working app can be found [here](https://csv-diff.netlify.app/)
 
 Compare two csv files representing the same information to find data entry errors.
 
+# Why
+
+I interviewed for a data entry position and was required to take a test comparing two different spreadsheets to check for data integrity. This automates that process.
+
 # svelte app
 
 This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
