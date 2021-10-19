@@ -4,6 +4,7 @@
   export let inputName = ""
   export let csv = ''
   let file = '';
+  let fileName = '';
 
   function handleFile(e) {
     let files = e.target.files, f = files[0];
@@ -14,12 +15,15 @@
       csv = XLSX.utils.sheet_to_csv(workbook.Sheets[sheetName]);
     };
     reader.readAsArrayBuffer(f);
+    if (f) {
+      fileName = f.name;
+    }
   }
 </script>
 
 <div class="textarea-group">
     <h2>
-        {inputName}
+        {inputName} {fileName.length > 0 ? `(${fileName})` : ""}
     </h2>
     <input type="file" accept=".xlsx, .xls, .csv" on:change={handleFile}/>
     <textarea bind:value={csv}></textarea>
