@@ -2,12 +2,13 @@
   import {data1, data2} from "./mock-csv";
   import Table from "./components/Table.svelte";
   import PrimaryKeySelect from "./components/PrimaryKeySelect.svelte";
+  import TableInput from "./components/TableInput.svelte";
 
   let diffs = [];
   let csv1 = data1
   let csv2 = data2
   let primaryKey = 'id'
-  $: primaryKeyOptions = csv1Arr.length ? Object.keys(csv1Arr[0]) : [];
+  $: primaryKeyOptions = csv1 && csv1Arr.length ? Object.keys(csv1Arr[0]) : [];
   $: csv1Arr = csvToObject(csv1)
   $: csv2Arr = csvToObject(csv2)
 
@@ -42,11 +43,11 @@
   function csvToObject(csv) {
     if (csv.length < 1) return;
     let csvArr = csv.trim().split('\n');
-    let csvKeys = csvArr[0].split(',');
+    let csvKeys = csvArr[0].split(',').map((str) => str.trim());
     let arr = [];
     for (let i = 1; i < csvArr.length; i++) {
       let newObj = {};
-      let csvVals = csvArr[i].split(',');
+      let csvVals = csvArr[i].split(',').map(str => str.trim());
       for (let j = 0; j < csvKeys.length; j++) {
         let key = csvKeys[j];
         let val = csvVals[j];
@@ -64,18 +65,8 @@
 <h1>CSV Differences</h1>
 <PrimaryKeySelect bind:primaryKey bind:primaryKeyOptions/>
 <div class="csv-inputs">
-  <div class="textarea-group">
-    <h2>
-      CSV 1
-    </h2>
-    <textarea bind:value={csv1}></textarea>
-  </div>
-  <div class="textarea-group">
-    <h2>
-      CSV 2
-    </h2>
-    <textarea bind:value={csv2}></textarea>
-  </div>
+    <TableInput bind:csv={csv1}/>
+    <TableInput bind:csv={csv2}/>
 </div>
 <br/>
 <Table diffs={diffs}/>
