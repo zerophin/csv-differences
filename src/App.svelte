@@ -71,8 +71,8 @@
 <PrimaryKeySelect bind:primaryKey bind:primaryKeyOptions/>
 <pre>{primaryKey}</pre>
 <div class="csv-inputs">
-    <TableInput bind:csv={csv1}/>
-    <TableInput bind:csv={csv2}/>
+    <TableInput bind:csv={csv1} inputName="CSV1"/>
+    <TableInput bind:csv={csv2} inputName="CSV2"/>
 </div>
 <br/>
 <Table diffs={diffs}/>

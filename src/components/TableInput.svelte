@@ -1,6 +1,7 @@
 <script>
   import XLSX from 'xlsx';
 
+  export let inputName = ""
   export let csv = ''
   let file = '';
 
@@ -10,9 +11,7 @@
     reader.onload = function (e) {
       let workbook = XLSX.read(e.target.result);
       let sheetName = workbook.SheetNames[0];
-      console.log(workbook)
       csv = XLSX.utils.sheet_to_csv(workbook.Sheets[sheetName]);
-      /* DO SOMETHING WITH workbook HERE */
     };
     reader.readAsArrayBuffer(f);
   }
@@ -20,9 +19,9 @@
 
 <div class="textarea-group">
     <h2>
-        CSV 1
+        {inputName}
     </h2>
-    <input type="file" on:change={handleFile}/>
+    <input type="file" accept=".xlsx, .xls, .csv" on:change={handleFile}/>
     <textarea bind:value={csv}></textarea>
 </div>
 
