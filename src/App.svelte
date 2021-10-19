@@ -8,7 +8,12 @@
   let csv1 = data1
   let csv2 = data2
   let primaryKey = 'id'
+  // TODO cleanup
+  // Gets the primary key options from the first row in csv1
   $: primaryKeyOptions = csv1 && csv1Arr.length ? Object.keys(csv1Arr[0]) : [];
+  // TODO cleanup
+  // Sets the primary key to first option in even primaryKeyOptions changes
+  $: primaryKey = primaryKeyOptions.includes(primaryKey) ? primaryKey : primaryKeyOptions[0]
   $: csv1Arr = csvToObject(csv1)
   $: csv2Arr = csvToObject(csv2)
 
@@ -64,6 +69,7 @@
 </script>
 <h1>CSV Differences</h1>
 <PrimaryKeySelect bind:primaryKey bind:primaryKeyOptions/>
+<pre>{primaryKey}</pre>
 <div class="csv-inputs">
     <TableInput bind:csv={csv1}/>
     <TableInput bind:csv={csv2}/>
