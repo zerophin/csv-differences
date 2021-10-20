@@ -48,7 +48,7 @@
     table {
         width: 100%;
         border: 1px solid #000;
-        display: block;
+        /*display: block;*/
     }
 
     tr {
@@ -57,6 +57,7 @@
 
     th, td {
         width: 50%;
+        padding: .2rem;
         text-align: left;
         vertical-align: top;
         border: 1px solid #000;

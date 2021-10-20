@@ -35,8 +35,8 @@
       })
       if (errors.length > 0) {
         let newErrObj = {
-          csv1: row,
-          csv2: row2,
+          file1: row,
+          file2: row2,
           errorKeys: errors,
         }
         rowDifferences.push(newErrObj);
