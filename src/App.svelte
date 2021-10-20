@@ -42,7 +42,6 @@
         rowDifferences.push(newErrObj);
       }
     })
-    console.log(rowDifferences)
     return rowDifferences;
   }
 

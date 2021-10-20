@@ -51,8 +51,12 @@
         display: block;
     }
 
+    tr {
+        width: 100%;
+    }
+
     th, td {
-        width: 20%;
+        width: 50%;
         text-align: left;
         vertical-align: top;
         border: 1px solid #000;

@@ -22,18 +22,26 @@
 </script>
 
 <div class="textarea-group">
-    <h2>
+    <label for={`file-${inputName}`}>
         {inputName} {fileName.length > 0 ? `(${fileName})` : ""}
-    </h2>
-    <input type="file" accept=".xlsx, .xls, .csv" on:change={handleFile}/>
+    </label>
+    <input type="file" accept=".xlsx, .xls, .csv" id={`file-${inputName}`} on:change={handleFile}/>
     <textarea bind:value={csv}></textarea>
 </div>
 
 <style>
+
+    label {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin: 1rem 0;
+    }
+
     .textarea-group {
         display: flex;
         flex-direction: column;
         width: 100%;
+        margin-top: 2em;
     }
 
     textarea {
