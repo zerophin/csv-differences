@@ -13,10 +13,6 @@
                             <td class:diffError={diff.errorKeys.includes(key)}>{value}</td>
                         </tr>
                     {/each}
-                    <!--          <tr>-->
-                    <!--            <td>Errors</td>-->
-                    <!--            <td>{diff.errorKeys}</td>-->
-                    <!--          </tr>-->
                 </table>
             {/each}
         </div>
@@ -29,9 +25,10 @@
 </div>
 <style>
     .tables {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: left;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1em;
+        justify-content: space-around;
     }
 
     .table-group {
@@ -40,11 +37,7 @@
         justify-content: space-between;
         margin-right: 2rem;
         margin-bottom: 2rem;
-        width: 25%;
         min-width: 200px;
-    }
-
-    .table-group:first-child {
     }
 
     caption {
@@ -71,9 +64,10 @@
         color: white;
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 1000px) {
         .tables {
             justify-content: center;
+            grid-template-columns: 1fr;
         }
 
         .table-group {

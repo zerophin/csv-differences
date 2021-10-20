@@ -17,6 +17,7 @@
   $: csv1Arr = csvToObject(csv1)
   $: csv2Arr = csvToObject(csv2)
 
+  // Returns [{file 1 row, file 2 row, column errors}]
   function findErrors(arr1, arr2, keyTerm = 'id') {
     let rowDifferences = [];
     if (!Array.isArray(arr1) || !Array.isArray(arr2)) return [];
@@ -41,10 +42,11 @@
         rowDifferences.push(newErrObj);
       }
     })
+    console.log(rowDifferences)
     return rowDifferences;
   }
 
-  // returns [{column: row, column: row}]
+  // returns [{column: rowItem, column: rowItem}]
   function csvToObject(csv) {
     if (csv.length < 1) return;
     let csvArr = csv.trim().split('\n');
@@ -64,12 +66,9 @@
   }
 
   $:diffs = findErrors(csv1Arr, csv2Arr, primaryKey)
-
-
 </script>
 <h1>CSV Differences</h1>
 <PrimaryKeySelect bind:primaryKey bind:primaryKeyOptions/>
-<pre>{primaryKey}</pre>
 <div class="csv-inputs">
     <TableInput bind:csv={csv1} inputName="File 1"/>
     <TableInput bind:csv={csv2} inputName="File 2"/>
@@ -79,12 +78,6 @@
 <style>
     .csv-inputs {
         display: flex;
-    }
-
-    .textarea-group {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
     }
 
     textarea {
