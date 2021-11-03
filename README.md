@@ -1,6 +1,6 @@
 # Link
 
-Working app can be found [here](https://csv-diff.netlify.app/)
+Working app can be found [here](https://file-diff.netlify.app/)
 
 # About
 
